@@ -1,0 +1,68 @@
+name: Genshin Repository List Automation
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: 0 17 * * *
+
+jobs:
+  action-preparation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check Git
+        run: |
+          git --version
+
+  auto-fetching:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save Current Date To GitHub Environment
+        run: |
+          echo "CURRENT_DATE=$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Fetch API Data Action To Original Directory
+        uses: JamesIves/fetch-api-data-action@v2
+        with:
+          endpoint: "https://sdk-os-static.mihoyo.com/hk4e_global/mdk/launcher/api/resource?channel_id=1&key=gcStgarh&launcher_id=10&sub_channel_id=0"
+          save-location: "fetch/original/"
+          save-name: result-${{ env.CURRENT_DATE }}
+      - name: Fetch API Data Action To Prettier Directory
+        uses: JamesIves/fetch-api-data-action@v2
+        with:
+          endpoint: "https://sdk-os-static.mihoyo.com/hk4e_global/mdk/launcher/api/resource?channel_id=1&key=gcStgarh&launcher_id=10&sub_channel_id=0"
+          save-location: "fetch/prettier/"
+          save-name: result-${{ env.CURRENT_DATE }}
+      - name: Code File Prettier
+        run: |
+          npx prettier --write fetch/prettier/**/*.json
+      - name: Commit Changes
+        run: |
+          git config --local user.name "JRSKelvin"
+          git config --local user.email "74870436+JRSKelvin@users.noreply.github.com"
+
+          arr[0]="Daily Fetch Commit Automation (Bot) 🏠"
+          arr[1]="Daily Fetch Commit Automation (Bot) 🏘️"
+          arr[2]="Daily Fetch Commit Automation (Bot) 🏡"
+          arr[3]="Daily Fetch Commit Automation (Bot) 🏨"
+          arr[4]="Daily Fetch Commit Automation (Bot) 🏪"
+          arr[5]="Daily Fetch Commit Automation (Bot) 🏦"
+          arr[6]="Daily Fetch Commit Automation (Bot) 🏢"
+          arr[7]="Daily Fetch Commit Automation (Bot) 🏭"
+          rand=$[$RANDOM % ${#arr[@]}]
+
+          git add ./fetch/
+          git commit -m "${arr[$rand]}"
+      - name: GitHub Push
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          directory: "."
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}

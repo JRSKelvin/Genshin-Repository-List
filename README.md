@@ -1,7 +1,7 @@
 # Genshin-Repository-List
 This repository includes automatically fetching Genshin Impact update history with GitHub Action. You can review all updates every day.
 
-Parent Repository - [Main repository](https://github.com/JRSKelvin/GenshinRepository)
+Parent Repository - [Main Repository](https://github.com/JRSKelvin/GenshinRepository)
 
 Original Repository - [GenshinRepository By RapDodge](https://github.com/rapdodge/GenshinRepository)
 

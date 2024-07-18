@@ -34,22 +34,22 @@ jobs:
           endpoint: "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?game_ids[]=gopR6Cufr3&launcher_id=VYTpXlbWo8"
           save-location: "fetch/original/"
           save-name: result-${{ env.CURRENT_DATE }}
-        |
-        with:
-          endpoint: "https://sdk-os-static.mihoyo.com/hk4e_global/mdk/launcher/api/resource?channel_id=1&key=gcStgarh&launcher_id=10&sub_channel_id=0"
-          save-location: "fetch/original/"
-          save-name: result-${{ env.CURRENT_DATE }}
+        # |
+        # with:
+        #   endpoint: "https://sdk-os-static.mihoyo.com/hk4e_global/mdk/launcher/api/resource?channel_id=1&key=gcStgarh&launcher_id=10&sub_channel_id=0"
+        #   save-location: "fetch/original/"
+        #   save-name: result-${{ env.CURRENT_DATE }}
       - name: Fetch API Data Action To Prettier Directory
         uses: JamesIves/fetch-api-data-action@v2
         with:
           endpoint: "https://sg-hyp-api.hoyoverse.com/hyp/hyp-connect/api/getGamePackages?game_ids[]=gopR6Cufr3&launcher_id=VYTpXlbWo8"
           save-location: "fetch/prettier/"
           save-name: result-${{ env.CURRENT_DATE }}
-        |
-        with:
-          endpoint: "https://sdk-os-static.mihoyo.com/hk4e_global/mdk/launcher/api/resource?channel_id=1&key=gcStgarh&launcher_id=10&sub_channel_id=0"
-          save-location: "fetch/prettier/"
-          save-name: result-${{ env.CURRENT_DATE }}
+        # |
+        # with:
+        #   endpoint: "https://sdk-os-static.mihoyo.com/hk4e_global/mdk/launcher/api/resource?channel_id=1&key=gcStgarh&launcher_id=10&sub_channel_id=0"
+        #   save-location: "fetch/prettier/"
+        #   save-name: result-${{ env.CURRENT_DATE }}
       - name: Code File Prettier
         run: |
           npx prettier --write fetch/prettier/**/*.json
